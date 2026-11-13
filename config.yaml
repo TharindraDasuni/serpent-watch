@@ -1,0 +1,30 @@
+# SerpentWatch configuration.
+# Secrets (Telegram token, camera passwords) belong in .env, NOT in this file.
+
+cameras:
+  # Local webcam: use its index (0 = first camera).
+  - name: webcam
+    source: 0
+
+  # CCTV / IP camera over RTSP - uncomment and edit.
+  # ${VARIABLES} are filled in from your .env file, so passwords stay out of Git.
+  # - name: front-garden
+  #   source: "rtsp://${CCTV_USER}:${CCTV_PASSWORD}@192.168.1.64:554/Streaming/Channels/102"
+  #
+  # - name: back-yard
+  #   source: "rtsp://admin:${BACKYARD_PASSWORD}@192.168.1.65:554/stream2"
+
+detection:
+  model_path: models/snake_model.pt
+  target_labels: [snake]       # class names (from the model) that trigger alerts
+  confidence: 0.15             # lower = more sensitive, more false alarms
+  image_size: 640              # inference resolution; 320 is much lighter on a Raspberry Pi
+  process_every_n_frames: 5    # FRAME SKIPPING: analyse 1 of every N frames (higher = less CPU)
+  confirm_frames: 2            # consecutive analysed frames that must contain a snake
+
+alerts:
+  cooldown_seconds: 60         # minimum time between alerts for the same camera
+  caption: "WARNING! A snake has been detected."
+
+display:
+  preview: true                # set to false on headless devices (Raspberry Pi over SSH)

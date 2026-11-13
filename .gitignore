@@ -1,0 +1,19 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Model weights are published via GitHub Releases, not committed
+*.pt
+*.onnx
+*_ncnn_model/
+
+# Misc
+.idea/
+.vscode/
+.DS_Store
